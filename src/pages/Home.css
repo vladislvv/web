@@ -1,0 +1,77 @@
+/* Общие стили для контейнера */
+.home-container {
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap; /* Позволяет постерам автоматически переноситься на новую строку */
+  gap: 20px; /* Расстояние между постерами */
+  justify-content: center; /* Выравнивание по центру */
+}
+
+/* Стили для карточки фильма */
+.movie-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  width: 200px; /* Ширина каждой карточки фильма */
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+/* Стили для изображения постера */
+.movie-card img {
+  width: 100%; /* Постер растягивается на ширину карточки */
+  height: 300px; /* Высота постера */
+  object-fit: cover; /* Обрезка постера для сохранения пропорций */
+}
+
+/* Стили для заголовка карточки */
+.movie-card h3 {
+  font-size: 18px;
+  padding: 10px;
+  margin: 0;
+}
+
+/* Стили для кнопки */
+.movie-card button {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.movie-card button:hover {
+  background-color: #0056b3;
+}
+
+/* Анимация при наведении на карточку */
+.movie-card:hover {
+  transform: scale(1.05); /* Анимация увеличения карточки при наведении */
+}
+
+/* Медиазапросы для адаптивности */
+@media (max-width: 1200px) {
+  .movie-card {
+    width: 180px; /* Уменьшаем ширину карточки на экранах с шириной меньше 1200px */
+  }
+}
+
+@media (max-width: 900px) {
+  .movie-card {
+    width: 150px; /* Уменьшаем ширину карточки на экранах с шириной меньше 900px */
+  }
+}
+
+@media (max-width: 600px) {
+  .movie-card {
+    width: 130px; /* Уменьшаем ширину карточки на экранах с шириной меньше 600px */
+  }
+
+  .movie-card img {
+    height: 200px; /* Уменьшаем высоту постера для маленьких экранов */
+  }
+}

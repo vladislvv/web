@@ -1,37 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import './MovieDetails.css';
 
-function MovieDetails() {
-    const { id } = useParams();
-    const [movie, setMovie] = useState(null);
+const MovieDetails = () => {
+  const { id } = useParams();
+  const [movie, setMovie] = useState(null);
 
-    useEffect(() => {
-        const fetchMovie = async () => {
-            try {
-                const response = await fetch(`https://www.omdbapi.com/?s=batman&apikey=30276778
-`);
-                const data = await response.json();
-                setMovie(data);
-            } catch (error) {
-                console.error('Ошибка загрузки данных фильма:', error);
-            }
-        };
+  useEffect(() => {
+    const fetchMovieDetails = async () => {
+      const response = await fetch(`http://www.omdbapi.com/?i=${id}&apikey=34fc1abd`);
+      const data = await response.json();
+      setMovie(data);
+    };
 
-        fetchMovie();
-    }, [id]);
+    fetchMovieDetails();
+  }, [id]);
 
-    return (
-        <div>
-            {movie && (
-                <div>
-                    <h2>{movie.Title}</h2>
-                    <img src={movie.Poster} alt={movie.Title} />
-                    <p>{movie.Plot}</p>
-                    <p>Рейтинг: {movie.imdbRating}</p>
-                </div>
-            )}
-        </div>
-    );
-}
+  if (!movie) return <p>Загрузка...</p>;
+
+  return (
+    <div>
+      <h2>{movie.Title}</h2>
+      <p>{movie.Year}</p>
+      <p>{movie.Plot}</p>
+      <button 
+        onClick={() => {
+          const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+          if (!favorites.some(fav => fav.imdbID === movie.imdbID)) {
+            favorites.push(movie);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+          }
+        }}
+      >
+        Добавить к Фаворитам 
+      </button>
+    </div>
+  );
+};
 
 export default MovieDetails;
