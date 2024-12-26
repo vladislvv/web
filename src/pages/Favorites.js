@@ -72,7 +72,7 @@ function Favorites() {
                             <img src={movie.Poster} alt={movie.Title} />
                             <a href={`/movie/${movie.imdbID}`}>Подробнее</a>
                             <div>
-                                {renderStars(movie)} {/* Отображение звезд */}
+                                {renderStars(movie)} 
                             </div>
                         </div>
                     ))}

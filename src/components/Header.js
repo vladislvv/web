@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';  // Импортируем Link
+import { Link } from 'react-router-dom';  
 import './Header.css';
 
 function Header({ onSearch }) {
@@ -14,9 +14,9 @@ function Header({ onSearch }) {
       <div className="header-content">
         <h1>Movie Gallery</h1>
         <nav>
-          <Link to="/">Home</Link>  {/* Используем Link вместо обычного <a> */}
-          <Link to="/favorites">Favorites</Link>  {/* Используем Link для Favorites */}
-          <Link to="/registration">Registration</Link>  {/* И для Registration */}
+          <Link to="/">Home</Link>  
+          <Link to="/favorites">Favorites</Link>  
+          <Link to="/registration">Registration</Link>  
         </nav>
       </div>
     </header>

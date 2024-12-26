@@ -6,9 +6,8 @@ function Home() {
     const [query, setQuery] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [totalResults, setTotalResults] = useState(0);
-    const [favorites, setFavorites] = useState([]); // Состояние для избранных фильмов
+    const [favorites, setFavorites] = useState([]); 
 
-    // Функция для загрузки фильмов с OMDB API
     const fetchMovies = async (page = 1) => {
         try {
             const response = await fetch(`https://www.omdbapi.com/?s=${query}&apikey=34fc1abd&page=${page}`);
@@ -44,19 +43,17 @@ function Home() {
         fetchFavorites();
     }, []);
 
-    // Функция для добавления/удаления фильма из избранного
     const toggleFavorite = async (movie) => {
         try {
             const isFavorite = favorites.some(fav => fav.imdbID === movie.imdbID);
             if (isFavorite) {
-                // Удаляем фильм из избранного
                 await fetch(`https://676a5618863eaa5ac0de052c.mockapi.io/tickets/favorites/${movie.imdbID}`, {
                     method: 'DELETE',
                 });
                 setFavorites((prevFavorites) => prevFavorites.filter(fav => fav.imdbID !== movie.imdbID));
             } else {
-                // Добавляем фильм в избранное
-                const newFavorite = { ...movie, rating: 0 }; // Добавляем рейтинг, если его нет
+                
+                const newFavorite = { ...movie, rating: 0 };
                 const response = await fetch('https://676a5618863eaa5ac0de052c.mockapi.io/tickets/favorites', {
                     method: 'POST',
                     headers: {
@@ -71,8 +68,6 @@ function Home() {
             console.error('Ошибка добавления/удаления фильма в избранное:', error);
         }
     };
-
-    // Функция для обновления рейтинга фильма
     const updateRating = async (movieId, rating) => {
         try {
             const updatedMovie = { rating };
@@ -94,9 +89,9 @@ function Home() {
 
     const totalPages = Math.ceil(totalResults / 10);
 
-    // Отображение звезд для рейтинга
+   
     const renderStars = (movie) => {
-        const rating = movie.rating || 0; // Получаем текущий рейтинг или 0
+        const rating = movie.rating || 0; 
         const stars = [];
 
         for (let i = 1; i <= 5; i++) {
@@ -106,7 +101,7 @@ function Home() {
                     onClick={() => updateRating(movie.imdbID, i)}
                     style={{
                         cursor: 'pointer',
-                        color: i <= rating ? '#FFD700' : '#ccc', // Желтые звезды для оценок
+                        color: i <= rating ? '#FFD700' : '#ccc',
                     }}
                 >
                     &#9733;
@@ -125,7 +120,6 @@ function Home() {
                 value={query}
                 onChange={(e) => {
                     setQuery(e.target.value);
-                    setCurrentPage(1); // Сбрасываем на первую страницу при новом запросе
                 }}
             />
             <div className="home-container">
@@ -138,23 +132,21 @@ function Home() {
                             {favorites.some(fav => fav.imdbID === movie.imdbID) ? 'Убрать из избранного' : 'Добавить в избранное'}
                         </button>
                         <div>
-                            {/* Отображение звезд для каждого фильма */}
                             {renderStars(movie)}
                         </div>
                     </div>
                 ))}
             </div>
 
-            {/* Пагинация */}
             {totalPages > 1 && (
-                <div style={{ marginTop: '20px', textAlign: 'center' }}>
+                <div className="pagination-container">
                     <button
                         onClick={() => setCurrentPage((prevPage) => Math.max(prevPage - 1, 1))}
                         disabled={currentPage === 1}
                     >
                         Назад
                     </button>
-                    <span style={{ margin: '0 10px' }}>
+                    <span>
                         Страница {currentPage} из {totalPages}
                     </span>
                     <button
